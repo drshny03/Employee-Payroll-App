@@ -1,8 +1,10 @@
 package com.bridgelab.employeepayrollapp.repository;
 
-import com.bridgelab.employeepayrollapp.model.Employee;
+import com.bridgelab.employeepayrollapp.model.EmployeeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
 
-
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+//repository for employee
+@Component
+public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Integer> {
 }

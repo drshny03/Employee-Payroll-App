@@ -1,32 +1,45 @@
 package com.bridgelab.employeepayrollapp.service;
 
-
-import com.bridgelab.employeepayrollapp.model.Employee;
+import com.bridgelab.employeepayrollapp.model.EmployeeEntity;
 import com.bridgelab.employeepayrollapp.repository.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+
 
 @Service
 public class EmployeeService {
-    private final EmployeeRepository repository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
-    public EmployeeService(EmployeeRepository repository) {
-        this.repository = repository;
+    //method to add employee
+    public EmployeeEntity addEmployee(EmployeeEntity employee){
+        return employeeRepository.save(employee);
     }
-
-    public List<Employee> getAllEmployees() {
-        return repository.findAll();
+    //method to get employee by id
+    public EmployeeEntity getEmployeeById(int id){
+        return employeeRepository.findById(id).orElse(null);
     }
+    //method to update employee
+    public EmployeeEntity udpdateEmployee(int id, EmployeeEntity employee){
+        //get employee
+        EmployeeEntity employeeEntity = employeeRepository.findById(id).orElse(null);
 
-    public Employee getEmployeeById(Long id) {
-        return repository.findById(id).orElse(null);
+        //check if null
+        if(employeeEntity != null){
+            employeeEntity.setName(employee.getName());
+            employeeEntity.setSalary(employee.getSalary());
+            return employeeRepository.save(employeeEntity);
+        }
+        return null;
     }
-
-    public Employee saveEmployee(Employee employee) {
-        return repository.save(employee);
+    //method to delete employee
+    public void deleteEmployee(int id){
+        employeeRepository.deleteById(id);
     }
-
-    public void deleteEmployee(Long id) {
-        repository.deleteById(id);
+    //method to show all employee
+    public List<EmployeeEntity> getAllEmployees(){
+        return employeeRepository.findAll();
     }
 }
