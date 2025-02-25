@@ -14,7 +14,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/employeeservice")
 public class EmployeeController {
-
     EmployeeService employeeService;
 
     //constructor
@@ -32,10 +31,9 @@ public class EmployeeController {
     public List<EmployeeDTO> getAllEmployees(){
         return employeeService.getAllEmployees();
     }
-
     //post method
     @PostMapping("/post")
-    public EmployeeDTO addEmployee(@RequestBody EmployeeEntity employee){
+    public EmployeeDTO addEmployee(@RequestBody EmployeeDTO employee){
         return employeeService.addEmployee(employee);
     }
 
