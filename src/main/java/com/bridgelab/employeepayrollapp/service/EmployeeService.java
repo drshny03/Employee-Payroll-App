@@ -1,6 +1,8 @@
 package com.bridgelab.employeepayrollapp.service;
 
+
 import com.bridgelab.employeepayrollapp.dto.EmployeeDTO;
+import com.bridgelab.employeepayrollapp.exception.EmployeeNotFoundException;
 import com.bridgelab.employeepayrollapp.model.EmployeeEntity;
 import com.bridgelab.employeepayrollapp.repository.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+
 
 @Service
 @Slf4j
@@ -38,11 +41,9 @@ public class EmployeeService {
     //method to get employee by id
     public EmployeeDTO getEmployeeById(int id){
         log.info("retrieving details of employee - {}",id);
-        EmployeeEntity employeeEntity = employeeRepository.findById(id).orElse(null);
+        EmployeeEntity employeeEntity = employeeRepository.findById(id).orElseThrow(() ->
+                new EmployeeNotFoundException("Employee not found"));
         //convert entity to dto and return
-        if(employeeEntity == null){
-            return null;
-        }
         return modelMapper.map(employeeEntity, EmployeeDTO.class);
     }
     //method to update employee

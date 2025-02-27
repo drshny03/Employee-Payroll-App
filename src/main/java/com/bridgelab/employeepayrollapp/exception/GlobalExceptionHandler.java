@@ -1,4 +1,6 @@
 package com.bridgelab.employeepayrollapp.exception;
+
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -16,5 +18,10 @@ public class GlobalExceptionHandler {
         FieldError fieldError = exception.getFieldError();
         assert fieldError != null;
         return new ResponseEntity<>(fieldError.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+    }
+    //method to handle employee not found exception
+    @ExceptionHandler(EmployeeNotFoundException.class)
+    public ResponseEntity<String> employeeExceptionHandle(EmployeeNotFoundException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
