@@ -5,6 +5,7 @@ package com.bridgelab.employeepayrollapp.controller;
 import com.bridgelab.employeepayrollapp.dto.EmployeeDTO;
 import com.bridgelab.employeepayrollapp.model.EmployeeEntity;
 import com.bridgelab.employeepayrollapp.service.EmployeeService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +43,7 @@ public class EmployeeController {
     }
     //post method
     @PostMapping("/post")
-    public ResponseEntity<EmployeeDTO> addEmployee(@RequestBody EmployeeDTO employee){
+    public ResponseEntity<EmployeeDTO> addEmployee(@Valid @RequestBody EmployeeDTO employee){
         log.info("receive api request to post a new employee");
         EmployeeDTO employeeDTO = employeeService.addEmployee(employee);
         //return response
@@ -51,7 +52,7 @@ public class EmployeeController {
 
     //put method
     @PutMapping("/put/{id}")
-    public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable int id, @RequestBody EmployeeDTO employee){
+    public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable int id, @Valid @RequestBody EmployeeDTO employee){
         log.info("receive api request for update employee {} details", id);
         EmployeeDTO employeeDTO = employeeService.updateEmployee(id, employee);
         //return response
