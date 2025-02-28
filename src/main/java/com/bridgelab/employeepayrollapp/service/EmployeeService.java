@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-
-
 @Service
 @Slf4j
 public class EmployeeService {
@@ -89,6 +87,18 @@ public class EmployeeService {
         List<EmployeeDTO> dtoList = new ArrayList<>();
 
         for (EmployeeEntity employee : employees) {
+            //entity to dto
+            EmployeeDTO dto = modelMapper.map(employee, EmployeeDTO.class);
+            dtoList.add(dto);
+        }
+        return dtoList;
+    }
+    //service to retrieve employee by department
+    public List<EmployeeDTO> getEmployeeByDepartment(String department){
+        List<EmployeeEntity> employeeEntityList = employeeRepository.findEmployeeByDepartment(department);
+        List<EmployeeDTO> dtoList = new ArrayList<>();
+
+        for (EmployeeEntity employee : employeeEntityList) {
             //entity to dto
             EmployeeDTO dto = modelMapper.map(employee, EmployeeDTO.class);
             dtoList.add(dto);
